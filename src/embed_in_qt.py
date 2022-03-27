@@ -16,7 +16,7 @@ class TumorViewerApp(QtWidgets.QMainWindow, Ui_MainWindow):
         super(TumorViewerApp,self).__init__(parent)
         self.setupUi(self)
         self.pushButton.clicked.connect(self.setup)
-
+        self.pushButton1.clicked.connect(self.end)
     def setup(self):
         self.vtkWidget = QVTKRenderWindowInteractor(self.frame)
         self.vl = Qt.QVBoxLayout()  
@@ -60,7 +60,10 @@ class TumorViewerApp(QtWidgets.QMainWindow, Ui_MainWindow):
         mapper2.SetBlendModeToMaximumIntensity()
 
         colorFunc2 = vtk.vtkColorTransferFunction() 
-        colorFunc2.AddRGBSegment(0.0, 0.0, 0.0, 0.0, 100.0, 100.0, 100.0, 1.0)
+        r = self.slider.value()
+        g = self.slider1.value()
+        b = self.slider2.value()
+        colorFunc2.AddRGBSegment(0.0, 0.0, 0.0, 0.0, 100, r, g, b)
         opacityWindow2 = 400
         opacityLevel2  = 10
         opacityFunc2 = vtk.vtkPiecewiseFunction()
@@ -91,8 +94,15 @@ class TumorViewerApp(QtWidgets.QMainWindow, Ui_MainWindow):
         self.show()
         self.iren.Initialize()
         self.iren.Start()
+    
+    def end(self):
+        for i in range(len(self.frame.children())):
+            self.frame.children()[i].deleteLater()
 
 
+   
+
+    
 
 
 class TumorViewer(QtWidgets.QWidget):
@@ -104,12 +114,6 @@ class TumorViewer(QtWidgets.QWidget):
         self.layout.addWidget(interactor)
         self.layout.setContentsMargins(0,0,0,0)
         self.setLayout(self.layout)
-
-
-
-        
-
-        
 
         # render window
         renWin = vtk.vtkRenderWindow()
