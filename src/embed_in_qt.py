@@ -131,7 +131,7 @@ class TumorViewer(QtWidgets.QWidget):
 
 if __name__ == "__main__":
 
-    os.chdir(os.path.dirname(__file__))
+    # os.chdir(os.path.dirname(__file__))
 
     app = QtWidgets.QApplication([])
     main_window = TumorViewerApp()
