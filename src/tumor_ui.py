@@ -95,13 +95,15 @@ class Ui_MainWindow(object):
                     'timestamp'] > self.delay_time:  # if more time has passed than the delay time since the last change
                     REFRESH = True
                     break
-        if REFRESH:
-            self.end()
-            self.setup()
+        # if REFRESH:
+        #     self.end()
+        #     time.sleep(5)
+        #     self.setup()
+
 
     def changed_slider(self):
         value = self.slider.value()
-        print(f'changing Red to {value}')
+        # print(f'changing Red to {value}')
         self.label.setText("Red: " + str(value))
 
         curr_values = {
@@ -115,7 +117,7 @@ class Ui_MainWindow(object):
 
     def changed_slider1(self):
         value = self.slider1.value()
-        print(f'changing Green to {value}')
+        # print(f'changing Green to {value}')
         self.label1.setText("Green: " + str(value))
         curr_values = {
             'slider': self.slider_data['slider']['value'],
@@ -128,7 +130,7 @@ class Ui_MainWindow(object):
 
     def changed_slider2(self):
         value = self.slider2.value()
-        print(f'changing Blue to {value}')
+        # print(f'changing Blue to {value}')
         self.label2.setText("Blue: " + str(value))
         curr_values = {
             'slider': self.slider_data['slider']['value'],
