@@ -1,6 +1,7 @@
 import vtk
 import sys
 import os
+
 from PyQt5 import QtCore, QtGui
 from vtk.qt.QVTKRenderWindowInteractor import QVTKRenderWindowInteractor
 from PyQt5.QtWidgets import QMainWindow, QApplication, QDialog, QFileDialog
@@ -18,6 +19,7 @@ class TumorViewerApp(QtWidgets.QMainWindow, Ui_MainWindow):
         self.pushButton.clicked.connect(self.setup)
         self.pushButton1.clicked.connect(self.end)
     def setup(self):
+
         self.vtkWidget = QVTKRenderWindowInteractor(self.frame)
         self.vl = Qt.QVBoxLayout()  
         self.vl.addWidget(self.vtkWidget)
@@ -91,49 +93,26 @@ class TumorViewerApp(QtWidgets.QMainWindow, Ui_MainWindow):
         self.iren = self.vtkWidget.GetRenderWindow().GetInteractor()
 
         self.frame.setLayout(self.vl)
+       
         self.show()
         self.iren.Initialize()
         self.iren.Start()
     
+
+
     def end(self):
+
         for i in range(len(self.frame.children())):
             self.frame.children()[i].deleteLater()
+       
 
 
-   
-
-    
-
-
-class TumorViewer(QtWidgets.QWidget):
-    def __init__(self):
-        super(TumerViewer,self).__init__(parent)
-        
-        interactor = QVTKRenderWindowInteractor(self)
-        self.layout = QtGui.QHBoxLayout()
-        self.layout.addWidget(interactor)
-        self.layout.setContentsMargins(0,0,0,0)
-        self.setLayout(self.layout)
-
-        # render window
-        renWin = vtk.vtkRenderWindow()
-        renWin.Initialize()
-        renWin.AddRenderer(render)
-        render.ResetCamera()
-        render.GetActiveCamera().SetViewAngle(30)
-        
-        #Interactor
-        self.iren = interactor
-        self.iren.SetRenderWindow(renWin)
-    
-    def start(self):
-        self.iren.Start()
 
 if __name__ == "__main__":
 
     os.chdir(os.path.dirname(__file__))
 
-    app = QtWidgets.QApplication([])
+    app = QtWidgets.QApplication(sys.argv)
     main_window = TumorViewerApp()
     main_window.show()
     sys.exit(app.exec_())

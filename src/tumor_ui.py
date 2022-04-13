@@ -2,26 +2,35 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
+        #initialize main window 
         MainWindow.setObjectName("MainWindow")
         MainWindow.resize(743, 430)
         self.centralwidget = QtWidgets.QWidget(MainWindow)
         self.centralwidget.setObjectName("centralwidget")
+        
+        # add layout 
         self.horizontalLayout = QtWidgets.QVBoxLayout(self.centralwidget)
         self.horizontalLayout.setObjectName("horizontalLayout")
+        
+        # add start button
         self.pushButton = QtWidgets.QPushButton(self.centralwidget)
         self.pushButton.setObjectName("Start")
         self.horizontalLayout.addWidget(self.pushButton)
-
+        
+        # add end button
         self.pushButton1 = QtWidgets.QPushButton(self.centralwidget)
         self.pushButton1.setObjectName("End")
         self.horizontalLayout.addWidget(self.pushButton1)
 
+        # add frame to visualize the brain model 
         self.frame = QtWidgets.QFrame(self.centralwidget)
         self.frame.setFrameShape(QtWidgets.QFrame.StyledPanel)
         self.frame.setFrameShadow(QtWidgets.QFrame.Raised)
         self.frame.setObjectName("frame")
         self.horizontalLayout.addWidget(self.frame)
-
+        
+        # add slider bar to control the RGB values 
+        # R
         MainWindow.setCentralWidget(self.centralwidget)
         self.slider = QtWidgets.QSlider(self.centralwidget)
         self.slider.setMaximum(255)
@@ -36,7 +45,7 @@ class Ui_MainWindow(object):
         self.horizontalLayout.addWidget(self.slider)
         self.horizontalLayout.addWidget(self.label)
 
-
+        # G
         MainWindow.setCentralWidget(self.centralwidget)
         self.slider1 = QtWidgets.QSlider(self.centralwidget)
         self.slider1.setMaximum(255)
@@ -52,7 +61,7 @@ class Ui_MainWindow(object):
         self.horizontalLayout.addWidget(self.label)
 
 
-
+        # B
         MainWindow.setCentralWidget(self.centralwidget)
         self.slider2 = QtWidgets.QSlider(self.centralwidget)
         self.slider2.setMaximum(255)
@@ -81,10 +90,11 @@ class Ui_MainWindow(object):
         self.retranslateUi(MainWindow)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
     
+    # Get value from the slider bar and show in the main window 
     def changed_slider(self):
         value = self.slider.value()
         self.label.setText("Red: " + str(value))
-
+     
     def changed_slider1(self):
         value = self.slider1.value()
         self.label1.setText("Green: " + str(value))
@@ -92,6 +102,7 @@ class Ui_MainWindow(object):
     def changed_slider2(self):
         value = self.slider2.value()
         self.label2.setText("Blue: " + str(value))
+
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
