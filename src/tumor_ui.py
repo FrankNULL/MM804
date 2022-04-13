@@ -1,4 +1,6 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
+import time
+
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
@@ -38,14 +40,13 @@ class Ui_MainWindow(object):
         self.slider.setProperty("value", 100)
         self.slider.setOrientation(QtCore.Qt.Horizontal)
         self.slider.setObjectName("slider")
-        self.slider.valueChanged.connect(self.changed_slider) 
+        self.slider.valueChanged.connect(self.changed_slider)
         self.label = QtWidgets.QLabel("label")
         self.label.setText("Red: 100")
 
         self.horizontalLayout.addWidget(self.slider)
         self.horizontalLayout.addWidget(self.label)
-
-        # G
+        
         MainWindow.setCentralWidget(self.centralwidget)
         self.slider1 = QtWidgets.QSlider(self.centralwidget)
         self.slider1.setMaximum(255)
@@ -53,15 +54,13 @@ class Ui_MainWindow(object):
         self.slider1.setProperty("value", 100)
         self.slider1.setOrientation(QtCore.Qt.Horizontal)
         self.slider1.setObjectName("slider")
-        self.slider1.valueChanged.connect(self.changed_slider1) 
+        self.slider1.valueChanged.connect(self.changed_slider1)
         self.label1 = QtWidgets.QLabel("label")
         self.label1.setText("Green: 100")
 
         self.horizontalLayout.addWidget(self.slider)
         self.horizontalLayout.addWidget(self.label)
 
-
-        # B
         MainWindow.setCentralWidget(self.centralwidget)
         self.slider2 = QtWidgets.QSlider(self.centralwidget)
         self.slider2.setMaximum(255)
@@ -69,7 +68,7 @@ class Ui_MainWindow(object):
         self.slider2.setProperty("value", 0)
         self.slider2.setOrientation(QtCore.Qt.Horizontal)
         self.slider2.setObjectName("slider")
-        self.slider2.valueChanged.connect(self.changed_slider2) 
+        self.slider2.valueChanged.connect(self.changed_slider2)
         self.label2 = QtWidgets.QLabel("label")
         self.label2.setText("Blue: 0")
 
@@ -84,24 +83,72 @@ class Ui_MainWindow(object):
 
         MainWindow.setCentralWidget(self.centralwidget)
         # Set the stretch factors for both the pushButton & the frame
-        self.horizontalLayout.setStretchFactor(self.frame,1)
-        self.horizontalLayout.setStretchFactor(self.pushButton,1)
-        self.horizontalLayout.setStretchFactor(self.slider,1)
+        self.horizontalLayout.setStretchFactor(self.frame, 1)
+        self.horizontalLayout.setStretchFactor(self.pushButton, 1)
+        self.horizontalLayout.setStretchFactor(self.slider, 1)
         self.retranslateUi(MainWindow)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
-    
-    # Get value from the slider bar and show in the main window 
+
+    def checker(self, current_value):
+        """responsible to decide if the sliding of slider has stopped.
+        IDEA is that each time the slider is changed this guy is called. it will keep track of last 3 slider values and
+        time, so if the slider is changed in a short period of time(maybe 3 second), it will not be considered as a sliding of slider.
+        """
+        REFRESH = False
+
+        for key, val in current_value.items():
+            if val != self.slider_data[key]['value']:
+                print("slider changed")
+                print(time.time() - self.slider_data[key]['timestamp'])
+                if time.time() - self.slider_data[key][
+                    'timestamp'] > self.delay_time:  # if more time has passed than the delay time since the last change
+                    REFRESH = True
+                    break
+        # if REFRESH:
+        #     self.end()
+        #     time.sleep(5)
+        #     self.setup()
+
+
     def changed_slider(self):
         value = self.slider.value()
+        # print(f'changing Red to {value}')
         self.label.setText("Red: " + str(value))
-     
+
+        curr_values = {
+            'slider': value,
+            'slider1': self.slider_data['slider1']['value'],
+            'slider2': self.slider_data['slider2']['value']
+        }
+        self.checker(curr_values)
+        # update time after check
+        self.slider_data['slider']['timestamp'] = time.time()
+
     def changed_slider1(self):
         value = self.slider1.value()
+        # print(f'changing Green to {value}')
         self.label1.setText("Green: " + str(value))
+        curr_values = {
+            'slider': self.slider_data['slider']['value'],
+            'slider1': value,
+            'slider2': self.slider_data['slider2']['value']
+        }
+        self.checker(curr_values)
+        # update time after check
+        self.slider_data['slider']['timestamp'] = time.time()
 
     def changed_slider2(self):
         value = self.slider2.value()
+        # print(f'changing Blue to {value}')
         self.label2.setText("Blue: " + str(value))
+        curr_values = {
+            'slider': self.slider_data['slider']['value'],
+            'slider1': self.slider_data['slider1']['value'],
+            'slider2': value,
+        }
+        self.checker(curr_values)
+        # update time after check
+        self.slider_data['slider']['timestamp'] = time.time()
 
 
     def retranslateUi(self, MainWindow):
