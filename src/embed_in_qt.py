@@ -49,8 +49,8 @@ class TumorViewerApp(QtWidgets.QMainWindow, Ui_MainWindow):
         reader2 = vtk.vtkDICOMImageReader()
         colors = vtk.vtkNamedColors()
 
-        reader.SetDirectoryName('35623.000000-FLAIRreg-79237')
-        reader2.SetDirectoryName('5388.000000-MaskTumor-63335')
+        reader.SetDirectoryName('1')
+        reader2.SetDirectoryName('2')
 
         # Marching Cubes Algorithm
         contourFilter = vtk.vtkContourFilter()
