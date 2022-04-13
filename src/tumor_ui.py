@@ -46,7 +46,7 @@ class Ui_MainWindow(object):
 
         self.horizontalLayout.addWidget(self.slider)
         self.horizontalLayout.addWidget(self.label)
-        
+        # G
         MainWindow.setCentralWidget(self.centralwidget)
         self.slider1 = QtWidgets.QSlider(self.centralwidget)
         self.slider1.setMaximum(255)
@@ -60,7 +60,8 @@ class Ui_MainWindow(object):
 
         self.horizontalLayout.addWidget(self.slider)
         self.horizontalLayout.addWidget(self.label)
-
+        
+        # B
         MainWindow.setCentralWidget(self.centralwidget)
         self.slider2 = QtWidgets.QSlider(self.centralwidget)
         self.slider2.setMaximum(255)
