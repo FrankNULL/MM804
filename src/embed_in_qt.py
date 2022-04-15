@@ -138,7 +138,7 @@ class TumorViewer(QtWidgets.QWidget):
         render.ResetCamera()
         render.GetActiveCamera().SetViewAngle(30)
 
-        # Interactor
+        #Interactor
         self.iren = interactor
         self.iren.SetRenderWindow(renWin)
 
