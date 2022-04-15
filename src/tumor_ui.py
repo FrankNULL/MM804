@@ -24,7 +24,7 @@ class Ui_MainWindow(object):
         self.pushButton1.setObjectName("End")
         self.horizontalLayout.addWidget(self.pushButton1)
 
-        # add frame to visualize the brain model 
+        #Add frame to visualize the brain model 
         self.frame = QtWidgets.QFrame(self.centralwidget)
         self.frame.setFrameShape(QtWidgets.QFrame.StyledPanel)
         self.frame.setFrameShadow(QtWidgets.QFrame.Raised)
